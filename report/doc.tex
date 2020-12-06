@@ -1,0 +1,167 @@
+\documentclass[a4paper, titlepage,12pt]{article}
+\usepackage[margin=3.7cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[swedish,english]{babel}
+\usepackage{csquotes}
+\usepackage[hyphens]{url}
+\usepackage{amsmath,amssymb,amsthm, amsfonts}
+\usepackage[yyyymmdd]{datetime}
+
+\title{Assignment 1 \& 2, TCP/IP Internetworking}
+\author{Adam Temmel (adte1700), Fredrik Sellgren (frse1700),\\Oscar Fredriksson (osfr1701)}
+
+\begin{document}
+	\maketitle
+	\section{Preparation: Subnetting}\label{sec:introduction}
+
+	First, we had to determine our IP-range.\\
+
+	\begin{center}
+		Fredrik's birthday:\\
+		$(89\cdot02+08) \ mod \ 223 = 186$\\
+		Oscar's birthday:\\
+		$(9\cdot02+04) \ mod \ 255 = 200$\\
+		Adam's birthday:\\
+		$(9\cdot11+16) \ mod \ 255 = 85$\\
+	\end{center}
+
+	This gave us the resulting IP-range of $186.200.85/20$.
+
+	\subsection{What is the network-ID of your groups subnet?}
+
+		\begin{center}
+			$186.200.85.0 \ bitwise \ and \ 255.255.240.0 = 186.200.80.0$\\
+		\end{center}
+
+	\subsection{What is the broadcast address of your groups subnet?}
+
+		\begin{center}
+			$186.200.85.0 \ bitwise \ or \ 0.0.15.255 = 186.200.95.255$\\
+		\end{center}
+
+	\subsection{How many hosts in total can this subnet hold?}
+
+		\begin{center}
+			$2^{32-20} - 2 = 2^{12} - 2 = 4096 - 2 = 4094$\\
+		\end{center}
+
+	\section{Further network planning}
+
+		The network requirements for this assignment is presented below.
+
+		\begin{center}
+			\begin{tabular}{|c|c|}
+				\hline
+				\textbf{Device} & \textbf{Number of hosts} \\
+				\hline
+				RT-A & 2100 \\
+				\hline
+				RT-B & 1000 \\
+				\hline
+				RT-C & 300 \\
+				\hline
+				RT-D & 600 \\
+				\hline
+				Link nets & 4 \\
+				\hline
+			\end{tabular}
+		\end{center}
+
+		It then follows that our original subnet needs to be subnetted further in order to provide these specific requirements.
+		Our proposed new subnets are as follows:
+
+		\begin{center}
+			\begin{tabular}{|c|c|}
+				\hline
+				RT-A & 2100 hosts \\
+				\hline
+				186.200.80.0/21 & 2046 hosts \\
+				\hline
+				186.200.95.0/26 & 62 hosts \\
+				\hline
+			\end{tabular}
+		\end{center}
+
+		\begin{center}
+			\begin{tabular}{|c|c|}
+				\hline
+				RT-B & 1000 hosts \\
+				\hline
+				186.200.88.0 & 1022 hosts \\
+				\hline
+			\end{tabular}
+		\end{center}
+
+		\begin{center}
+			\begin{tabular}{|c|c|}
+				\hline
+				RT-C & 300 hosts \\
+				\hline
+				186.200.94.0/24 & 254 hosts \\
+				\hline
+				186.200.95.64/26 & 62 hosts \\
+				\hline
+			\end{tabular}
+		\end{center}
+
+		\begin{center}
+			\begin{tabular}{|c|c|}
+				\hline
+				RT-D & 600 hosts \\
+				\hline
+				186.200.92.0/23 & 510 hosts \\
+				\hline
+				186.200.95.128/26 & 62 hosts \\
+				\hline
+				186.200.95.192/27 & 30 hosts \\
+				\hline
+			\end{tabular}
+		\end{center}
+
+		\begin{center}
+			\begin{tabular}{|c|c|}
+				\hline
+				\textbf{Connection} & \textbf{Designated Address} \\
+				\hline
+				RT-A → RT-B & 186.200.95.224/30\\
+				\hline
+				RT-A → RT-C & 186.200.95.228/30\\
+				\hline
+				RT-D → RT-B & 186.200.95.232/30\\
+				\hline
+				RT-D → RT-C & 186.200.95.236/30\\
+				\hline
+			\end{tabular}
+		\end{center}
+
+	\section{Building the network}
+		\subsection{Which group member was doing the configuration for this part?}
+			We found it easiest to let one member connect to the system and mirror his screen on a large display. The idea here is that one group member could setup the network under supervision of all other members. If all members could verify the validity of each command, the risk of misconfiguring the network should be minimized (This did not work out perfect in reality, we did mess up once).
+
+		\subsection{Static routing}
+
+		\subsubsection{List the static routes configured:}
+
+		\subsubsection{When issuing a ping from RT-D to the loopback on RT-A, what path will the ICMP-packet take and why?}
+
+		\subsubsection{Without removing a static route, force the ping packets to travel through router C (RT-C) when trying to reach the loopback on RT-A from RT-D. How did you achieve this?}
+
+		\subsubsection{Which group member was doing the configuration for this part?}
+
+		\subsection{Dynamic routing}
+
+		\subsubsection{Draw up the topology and write the cost on each link according to the given equation}
+
+		\subsubsection{Each group member will now select one of the four routers, and from this router calculate the shortest path to all the sub-networks using Dijkstra's algorithm. What are the costs to reach the different networks?}
+
+		\subsubsection{Issue the command show ip route and look at the metric OPSF use for all the networks in the routing table. Are the metrics the same as the metrics you calculated in question 2?}
+
+		\subsubsection{Issue the ping command from RT-D to the loopback on RT-A. Which path does the ICMP-packet take to reach RT-A loopback?}
+
+		\subsubsection{Modify the OSPF-metric so that it prefers to send packages though RT-B instead of RT-C when sending packages from RT-D to RT-A. Show how you achieved this.}
+
+		\subsubsection{Which group member was doing the configuration for this part?}
+
+\end{document}
+

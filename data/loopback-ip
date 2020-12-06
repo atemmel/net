@@ -1,0 +1,150 @@
+# Loopback ip
+200.169.248.12
+
+RT-D#ping 200.169.248.12
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 200.169.248.12, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 40/41/44 ms
+
+RT-D#traceroute ip 200.169.248.12
+Type escape sequence to abort.
+Tracing the route to 200.169.248.12
+VRF info: (vrf in name/id, vrf out name/id)
+  1 186.200.95.233 12 msec
+    186.200.95.237 4 msec
+    186.200.95.233 12 msec
+  2 186.200.95.230 16 msec
+    186.200.95.226 20 msec
+    186.200.95.230 16 msec
+
+Packet sent with a source address of 186.200.95.234
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 40/42/44 ms
+
+Sending 5, 100-byte ICMP Echos to 200.169.248.12, timeout is 2 seconds:
+Packet sent with a source address of 186.200.95.238
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 32/33/40 ms
+
+RT-D(config)#ip route 200.169.248.0 255.255.255.0 186.200.95.233 255
+
+RT-D#ping 200.169.248.12
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 200.169.248.12, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 20/20/24 ms
+
+Dynamic metrics:
+
+A:
+
+      186.200.0.0/16 is variably subnetted, 16 subnets, 8 masks
+C        186.200.80.0/21 is directly connected, GigabitEthernet0/0.1
+L        186.200.80.1/32 is directly connected, GigabitEthernet0/0.1
+O        186.200.88.0/22 [110/782] via 186.200.95.225, 00:16:47, Serial0/0/1
+O        186.200.92.0/23 [110/1172] via 186.200.95.229, 00:07:07, Serial0/0/0
+O        186.200.94.0/24 [110/391] via 186.200.95.229, 00:16:47, Serial0/0/0
+C        186.200.95.0/26 is directly connected, GigabitEthernet0/0.2
+L        186.200.95.1/32 is directly connected, GigabitEthernet0/0.2
+O        186.200.95.64/26 [110/391] via 186.200.95.229, 00:16:47, Serial0/0/0
+O        186.200.95.128/26
+           [110/1172] via 186.200.95.229, 00:07:07, Serial0/0/0
+O        186.200.95.192/27
+           [110/1172] via 186.200.95.229, 00:07:07, Serial0/0/0
+C        186.200.95.224/30 is directly connected, Serial0/0/1
+L        186.200.95.226/32 is directly connected, Serial0/0/1
+C        186.200.95.228/30 is directly connected, Serial0/0/0
+L        186.200.95.230/32 is directly connected, Serial0/0/0
+O        186.200.95.232/30
+           [110/2343] via 186.200.95.225, 00:06:23, Serial0/0/1
+O        186.200.95.236/30
+           [110/1171] via 186.200.95.229, 00:07:07, Serial0/0/0
+      200.169.248.0/24 is variably subnetted, 2 subnets, 2 masks
+C        200.169.248.0/24 is directly connected, Loopback0
+L        200.169.248.12/32 is directly connected, Loopback0
+RT-A#
+
+B:
+
+      186.200.0.0/16 is variably subnetted, 15 subnets, 8 masks
+O        186.200.80.0/21 [110/782] via 186.200.95.226, 00:26:39, Serial0/0/1
+C        186.200.88.0/22 is directly connected, GigabitEthernet0/0
+L        186.200.88.1/32 is directly connected, GigabitEthernet0/0
+O        186.200.92.0/23 [110/1563] via 186.200.95.234, 00:26:51, Serial0/0/0
+O        186.200.94.0/24 [110/1172] via 186.200.95.226, 00:26:39, Serial0/0/1
+O        186.200.95.0/26 [110/782] via 186.200.95.226, 00:26:39, Serial0/0/1
+O        186.200.95.64/26 [110/1172] via 186.200.95.226, 00:26:39, Serial0/0/1
+O        186.200.95.128/26
+           [110/1563] via 186.200.95.234, 00:26:51, Serial0/0/0
+O        186.200.95.192/27
+           [110/1563] via 186.200.95.234, 00:26:51, Serial0/0/0
+C        186.200.95.224/30 is directly connected, Serial0/0/1
+L        186.200.95.225/32 is directly connected, Serial0/0/1
+O        186.200.95.228/30
+           [110/1171] via 186.200.95.226, 00:26:39, Serial0/0/1
+C        186.200.95.232/30 is directly connected, Serial0/0/0
+L        186.200.95.233/32 is directly connected, Serial0/0/0
+O        186.200.95.236/30
+           [110/1952] via 186.200.95.226, 00:17:32, Serial0/0/1
+
+C:
+
+S*    0.0.0.0/0 [1/0] via 200.169.248.12
+      186.200.0.0/16 is variably subnetted, 16 subnets, 8 masks
+S        186.200.80.0/21 [1/0] via 186.200.95.230
+S        186.200.88.0/22 [1/0] via 186.200.95.238
+                         [1/0] via 186.200.95.230
+S        186.200.92.0/23 [1/0] via 186.200.95.238
+C        186.200.94.0/24 is directly connected, GigabitEthernet0/0.1
+L        186.200.94.1/32 is directly connected, GigabitEthernet0/0.1
+S        186.200.95.0/26 [1/0] via 186.200.95.230
+C        186.200.95.64/26 is directly connected, GigabitEthernet0/0.2
+L        186.200.95.65/32 is directly connected, GigabitEthernet0/0.2
+S        186.200.95.128/26 [1/0] via 186.200.95.238
+S        186.200.95.192/27 [1/0] via 186.200.95.238
+S        186.200.95.224/30 [1/0] via 186.200.95.230
+C        186.200.95.228/30 is directly connected, Serial0/0/1
+L        186.200.95.229/32 is directly connected, Serial0/0/1
+S        186.200.95.232/30 [1/0] via 186.200.95.238
+C        186.200.95.236/30 is directly connected, Serial0/0/0
+L        186.200.95.237/32 is directly connected, Serial0/0/0
+S     200.169.248.0/24 [1/0] via 186.200.95.230
+
+D:
+
+S*    0.0.0.0/0 [1/0] via 200.169.248.12
+      186.200.0.0/16 is variably subnetted, 18 subnets, 9 masks
+S        186.200.80.0/21 [1/0] via 186.200.95.237
+                         [1/0] via 186.200.95.233
+S        186.200.88.0/22 [1/0] via 186.200.95.233
+C        186.200.92.0/23 is directly connected, GigabitEthernet0/0.1
+L        186.200.92.1/32 is directly connected, GigabitEthernet0/0.1
+S        186.200.94.0/24 [1/0] via 186.200.95.237
+S        186.200.95.0/26 [1/0] via 186.200.95.237
+                         [1/0] via 186.200.95.233
+S        186.200.95.64/26 [1/0] via 186.200.95.237
+C        186.200.95.128/26 is directly connected, GigabitEthernet0/0.2
+L        186.200.95.129/32 is directly connected, GigabitEthernet0/0.2
+C        186.200.95.192/27 is directly connected, GigabitEthernet0/0.3
+L        186.200.95.193/32 is directly connected, GigabitEthernet0/0.3
+S        186.200.95.224/30 [1/0] via 186.200.95.233
+S        186.200.95.224/31 [1/0] via 186.200.95.233
+S        186.200.95.228/30 [1/0] via 186.200.95.237
+C        186.200.95.232/30 is directly connected, Serial0/0/0
+L        186.200.95.234/32 is directly connected, Serial0/0/0
+C        186.200.95.236/30 is directly connected, Serial0/0/1
+L        186.200.95.238/32 is directly connected, Serial0/0/1
+S     200.169.248.0/24 [1/0] via 186.200.95.237
+
+Ping from RT-D to Loopback 0
+
+RT-D#ping 200.169.248.12
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 200.169.248.12, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 20/20/24 ms
+
+Traskar D -> C -> A
+
+

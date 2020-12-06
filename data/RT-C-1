@@ -1,0 +1,132 @@
+!
+! Last configuration change at 10:06:16 UTC Tue Dec 1 2020
+!
+version 15.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname RT-C
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+cts logging verbose
+!
+!
+license udi pid CISCO1941/K9 sn FCZ214241F5
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Embedded-Service-Engine0/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/0
+ no shutdown
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0.1
+ no shutdown
+ encapsulation dot1Q 1 native
+ ip address 186.200.94.1 255.255.255.0
+!
+interface GigabitEthernet0/0.2
+ no shutdown
+ encapsulation dot1Q 2
+ ip address 186.200.95.65 255.255.255.192
+!
+interface GigabitEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface Serial0/0/0
+ no shutdown
+ description Going from RT-C to RT-D
+ ip address 186.200.95.237 255.255.255.252
+!
+interface Serial0/0/1
+ no shutdown
+ description Going from RT-C to RT-A
+ ip address 186.200.95.229 255.255.255.252
+!
+interface Serial0/1/0
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+interface Serial0/1/1
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+!
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+line aux 0
+line 2
+ no activation-character
+ no exec
+ transport preferred none
+ transport output pad telnet rlogin lapb-ta mop udptn v120 ssh
+ stopbits 1
+line vty 0 4
+ login
+ transport input none
+!
+scheduler allocate 20000 1000
+!
+end

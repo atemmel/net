@@ -1,0 +1,148 @@
+!
+! Last configuration change at 11:44:47 UTC Tue Dec 1 2020
+!
+version 15.4
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+!
+hostname RT-A
+!
+boot-start-marker
+boot-end-marker
+!
+!
+!
+no aaa new-model
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip cef
+no ipv6 cef
+!
+multilink bundle-name authenticated
+!
+cts logging verbose
+!
+!
+license udi pid CISCO1941/K9 sn FCZ214241F6
+!
+!
+!
+redundancy
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 200.169.248.12 255.255.255.0
+!
+interface Embedded-Service-Engine0/0
+ no ip address
+ shutdown
+!
+interface GigabitEthernet0/0
+ no ip address
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0.1
+ encapsulation dot1Q 1 native
+ ip address 186.200.80.1 255.255.248.0
+!
+interface GigabitEthernet0/0.2
+ encapsulation dot1Q 2
+ ip address 186.200.95.1 255.255.255.192
+!
+interface GigabitEthernet0/1
+ no ip address
+ shutdown
+ duplex auto
+ speed auto
+!
+interface Serial0/0/0
+ description going from RT-A to RT-C
+ ip address 186.200.95.230 255.255.255.252
+ clock rate 256000
+!
+interface Serial0/0/1
+ description going from RT-A to RT-B
+ ip address 186.200.95.226 255.255.255.252
+!
+interface Serial0/1/0
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+interface Serial0/1/1
+ no ip address
+ shutdown
+ clock rate 2000000
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+ip route 0.0.0.0 0.0.0.0 Loopback0
+ip route 186.200.88.0 255.255.252.0 186.200.95.225
+ip route 186.200.92.0 255.255.254.0 186.200.95.234
+ip route 186.200.92.0 255.255.254.0 186.200.95.238
+ip route 186.200.92.0 255.255.255.224 186.200.95.225
+ip route 186.200.94.0 255.255.255.0 186.200.95.229
+ip route 186.200.95.64 255.255.255.192 186.200.95.229
+ip route 186.200.95.128 255.255.255.192 186.200.95.234
+ip route 186.200.95.128 255.255.255.192 186.200.95.238
+ip route 186.200.95.192 255.255.255.224 186.200.95.234
+ip route 186.200.95.192 255.255.255.224 186.200.95.225
+ip route 186.200.95.192 255.255.255.224 186.200.95.238
+ip route 186.200.95.228 255.255.255.252 186.200.95.238
+ip route 186.200.95.228 255.255.255.252 186.200.95.236
+ip route 186.200.95.228 255.255.255.252 186.200.95.237
+ip route 186.200.95.232 255.255.255.252 186.200.95.225
+ip route 186.200.95.236 255.255.255.252 186.200.95.229
+!
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+line aux 0
+line 2
+ no activation-character
+ no exec
+ transport preferred none
+ transport output pad telnet rlogin lapb-ta mop udptn v120 ssh
+ stopbits 1
+line vty 0 4
+ login
+ transport input none
+!
+scheduler allocate 20000 1000
+!
+end
