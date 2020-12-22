@@ -20,14 +20,17 @@
 
 	First, we had to determine our IP-range.\\
 
-	\begin{center}
-		Fredrik's birthday:\\
-		$(89\cdot02+08) \ mod \ 223 = 186$\\
-		Oscar's birthday:\\
-		$(9\cdot02+04) \ mod \ 255 = 200$\\
-		Adam's birthday:\\
-		$(9\cdot11+16) \ mod \ 255 = 85$\\
-	\end{center}
+	\begin{figure}[h!]
+		\begin{center}
+			Fredrik's birthday:\\
+			$(89\cdot02+08) \ mod \ 223 = 186$\\
+			Oscar's birthday:\\
+			$(9\cdot02+04) \ mod \ 255 = 200$\\
+			Adam's birthday:\\
+			$(9\cdot11+16) \ mod \ 255 = 85$\\
+			\caption{All preliminary IP arithmetic}
+		\end{center}
+	\end{figure}
 
 	This gave us the resulting IP-range of $186.200.85/20$.
 
@@ -51,29 +54,34 @@
 
 	\section{Further network planning}
 
-		The network requirements for this assignment is presented below.
+		The network requirements for this assignment are presented in \textit{figure~\ref{netreq}}.
 
-		\begin{center}
-			\begin{tabular}{|c|c|}
-				\hline
-				\textbf{Device} & \textbf{Number of hosts} \\
-				\hline
-				RT-A & 2100 \\
-				\hline
-				RT-B & 1000 \\
-				\hline
-				RT-C & 300 \\
-				\hline
-				RT-D & 600 \\
-				\hline
-				Link nets & 4 \\
-				\hline
-			\end{tabular}
-		\end{center}
+		\begin{figure}[h!]
+			\begin{center}
+				\begin{tabular}{|c|c|}
+					\hline
+					\textbf{Device} & \textbf{Number of hosts} \\
+					\hline
+					RT-A & 2100 \\
+					\hline
+					RT-B & 1000 \\
+					\hline
+					RT-C & 300 \\
+					\hline
+					RT-D & 600 \\
+					\hline
+					Link nets & 4 \\
+					\hline
+				\end{tabular}
+				\caption{Network requirements}
+				\label{netreq}
+			\end{center}
+		\end{figure}
 
 		It then follows that our original subnet needs to be subnetted further in order to provide these specific requirements.
-		Our proposed new subnets are as follows:
+		Our proposed new subnets are shown in \textit{figure~\ref{suggestedconfig}}.
 
+		\begin{figure}[h!]
 		\begin{center}
 			\begin{tabular}{|c|c|}
 				\hline
@@ -137,6 +145,9 @@
 				\hline
 			\end{tabular}
 		\end{center}
+		\caption{All routers and their respective subnets}
+		\label{suggestedconfig}
+	\end{figure}
 
 	\section{Building the network}
 		\subsection{Which group member was doing the configuration for this part?}
@@ -145,14 +156,16 @@
 			\begin{center}
 				\includegraphics[scale=0.20]{./static_img.jpg}
 			\end{center}
+			\caption{A visual representation of the suggested configuration}
 		\end{figure}
 
-			We found it easiest to let one member connect to the system and mirror his screen on a large display. The idea here is that one group member could setup the network under the supervision of all other members. If all members could verify the validity of each command, the risk of misconfiguring the network should be minimized (This did not work out perfect in reality, we did mess up once). For this part, Fredrik Sellgren was responsible for typing in the requested commands.
+			We found it easiest to let one member connect to the system and mirror his screen on a large display. The idea here is that one group member could setup the network under the supervision of all other members. If all members could verify the validity of each command, the risk of misconfiguring the network should be minimized (This did not work out perfect in reality, as we did mess up at times). For this part, Fredrik Sellgren was responsible for typing in the requested commands.
 
 		\subsection{Static routing}
 
 		\subsubsection{List the static routes configured:}
 
+			\begin{center}
 		\begin{longtable}{|l|l|l|}
 
 			\hline
@@ -247,6 +260,10 @@
 			D → 200.169.248.12 & 186.200.95.226 & D →  A’s loopback via B \\
 			\hline
 		\end{longtable}
+		\begin{figure}[H]
+		\caption{List of all static routes configured}
+		\end{figure}
+	\end{center}
 
 		After this configuration we were able to ping all the subnets from all the routers across the board.
 
@@ -297,7 +314,19 @@ Success rate is 100 percent (5/5), round-trip min/avg/max = 20/20/24 ms
 
 		During this part of the laboration we continued to discuss how to solve the configuration as a group, but this time Oscar Fredriksson was pushing the buttons. 
 
-		\begin{figure}
+		\subsubsection{Draw up the topology and write the cost on each link according to the given equation}
+
+		\begin{figure}[H]
+			\begin{center}
+				\includegraphics[scale=0.30]{./djikstra_manual.png}
+			\end{center}
+			\caption{Network topology in regards to travel cost}
+		\end{figure}
+
+		\subsubsection{Each group member will now select one of the four routers, and from this router calculate the shortest path to all the sub-networks using Dijkstra's algorithm. What are the costs to reach the different networks?}
+
+
+		\begin{figure}[H]
 			\begin{center}
 			\begin{tabular}{|c|c|c|}
 				\hline
@@ -338,7 +367,8 @@ A → AB & A → AB & 0 \\
 			\end{center}
 		\end{figure}
 
-		\begin{figure}
+		\begin{figure}[H]
+			\begin{center}
 			\begin{tabular}{|c|c|c|}
 
 				\hline
@@ -377,9 +407,11 @@ B → BD & B → BD & 0 \\
 
 			\end{tabular}
 			\caption{RT-B}
+			\end{center}
 		\end{figure}
 
-		\begin{figure}
+		\begin{figure}[H]
+			\begin{center}
 			\begin{tabular}{|c|c|c|}
 
 
@@ -418,9 +450,10 @@ C → A & C → AC → A & 390,625 \\
 \hline
 			\end{tabular}
 			\caption{RT-C}
+			\end{center}
 		\end{figure}
 
-		\begin{figure}
+		\begin{figure}[H]
 			\begin{center}
 				\begin{tabular}{|c|c|c|}
 					\hline
@@ -461,24 +494,29 @@ C → A & C → AC → A & 390,625 \\
 			\end{center}
 		\end{figure}
 
-		\subsubsection{Draw up the topology and write the cost on each link according to the given equation}
+		\subsubsection{Issue the command show ip route and look at the metric OSPF use for all the networks in the routing table. Are the metrics the same as the metrics you calculated in question 2?}
 
-		\begin{figure}[H]
-			\begin{center}
-				\includegraphics[scale=0.30]{./djikstra_manual.png}
-			\end{center}
-			\caption{Network topology in regards to travel cost}
-		\end{figure}
-
-		\subsubsection{Each group member will now select one of the four routers, and from this router calculate the shortest path to all the sub-networks using Dijkstra's algorithm. What are the costs to reach the different networks?}
-
-		\subsubsection{Issue the command show ip route and look at the metric OPSF use for all the networks in the routing table. Are the metrics the same as the metrics you calculated in question 2?}
+		The RT-A and RT-B seems to have the same values as the calculated one’s we got using dijkstra's algorithm. RT-C and RT-D on the other hand seem to have some problems in terms  of that the cost to get to every path is 0. We may have misconfigured the OSPF in some way, but we were able to ping and communicate with all the subnetworks.
 
 		\subsubsection{Issue the ping command from RT-D to the loopback on RT-A. Which path does the ICMP-packet take to reach RT-A loopback?}
 
+		\begin{verbatim}
+			RT-D#ping 200.169.248.12
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 200.169.248.12, timeout is 2 seconds:
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 20/20/24 ms
+		\end{verbatim}
+
+		By comparing this RTT to the previous measurements, we can deduce that the package travels through RT-C.
+
 		\subsubsection{Modify the OSPF-metric so that it prefers to send packages though RT-B instead of RT-C when sending packages from RT-D to RT-A. Show how you achieved this.}
 
+		There are two ways to accomplish this. One could either configure RT-B to have a lesser internal distance than compared to RT-C, explicitly suggesting the system to prefer the RT-B path over the RT-C path. One could also change the bandwidth for the interfaces at RT-B or RT-C, which would implcitly cause the system to prefer the RT-B path over the RT-C path. We tried restarting the interfaces after reconfiguring them, but we sadly did not manage to get either of these two configurations to work out in reality, and we do not know why.
+
 		\subsubsection{Which group member was doing the configuration for this part?}
+
+		As in the previous sections, we did all the configuration on one computer and discussed what commands to use for the configuration but this time Adam Temmel was the one pushing the buttons.
 
 \end{document}
 
